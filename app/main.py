@@ -1,8 +1,22 @@
 class Person:
-    # write your code here
-    pass
+    people = []
+
+    def __init__(self, name: str, age: int):
+        self.name = name
+        self.age = age
 
 
 def create_person_list(people: list) -> list:
-    # write your code here
-    pass
+    new_persons = [Person(person["name"], person["age"]) for person in people]
+    for person in people:
+        new_person = list(filter((lambda n_person: n_person.name == person["name"]), new_persons))[0]
+        if "wife" in person.keys() and person["wife"]:
+            wife = list(filter((lambda n_person: n_person.name == person["wife"]), new_persons))[0]
+            new_person.wife = wife
+        if "husband" in person.keys() and person["husband"]:
+            husband = list(filter((lambda n_person: n_person.name == person["husband"]), new_persons))[0]
+            new_person.husband = husband
+
+    Person.people = new_persons
+
+    return new_persons
